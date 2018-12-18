@@ -1,3 +1,4 @@
+import six
 import unittest
 
 from pampy import match_dict, _, match
@@ -37,7 +38,7 @@ class IterableTests(unittest.TestCase):
             self.assertEqual(match_dict({"a": _, _: int},
                                         {"a": 1, "b": 2, "c": 3}), (True, [1, "b", 2]))
 
-            self.assertEqual(match_dict({"type": _, _: str},
+            self.assertEqual(match_dict({"type": _, _: six.text_type},
                                         {"type": "pet", "cat-name": "bonney", "info": {"age": 1}}),
                              (True, ["pet", "cat-name", "bonney"]))
 
@@ -54,5 +55,5 @@ class IterableTests(unittest.TestCase):
         self.assertEqual(average_age, (2+1+3)/3)
 
         # I want al the names, but data is inconsistent!
-        names = [match(row, {"type": _, _: str}, lambda type, name_field, name: name) for row in data]
+        names = [match(row, {"type": _, _: six.text_type}, lambda typ, name_field, name: name) for row in data]
         self.assertEqual(names, ['fuffy', 'puffy', 'buffy'])

@@ -1,6 +1,6 @@
 import unittest
 
-from functools import reduce
+import functools as ft
 
 from pampy import match, REST, TAIL, HEAD, _, match_value, match_iterable
 
@@ -69,8 +69,8 @@ class PampyElaborateTests(unittest.TestCase):
         minus = lambda a, b: a - b
         self.assertEqual(lisp((plus, 1, 2)), 3)
         self.assertEqual(lisp((plus, 1, (minus, 4, 2))), 3)
-        self.assertEqual(lisp((reduce, plus, (1, 2, 3))), 6)
-        self.assertEqual(lisp((reduce, plus, (range, 10))), 45)
+        self.assertEqual(lisp((ft.reduce, plus, (1, 2, 3))), 6)
+        self.assertEqual(lisp((ft.reduce, plus, (range, 10))), 45)
 
     def test_myzip(self):
         def myzip(a, b):

@@ -2,6 +2,8 @@ import unittest
 
 import re
 
+import six
+
 from pampy import match_value, match, HEAD, TAIL, _, MatchError
 
 
@@ -14,7 +16,7 @@ class PampyBasicTests(unittest.TestCase):
         self.assertTrue(match_value_bool(3, 3))
         self.assertTrue(match_value_bool(int, 3))
         self.assertTrue(match_value_bool("ok", "ok"))
-        self.assertTrue(match_value_bool(str, "ok"))
+        self.assertTrue(match_value_bool(six.text_type, "ok"))
         self.assertTrue(match_value_bool(_, "ok"))
         self.assertTrue(match_value_bool(_, 3))
         self.assertTrue(match_value_bool(_, 3.3))
@@ -93,12 +95,12 @@ class PampyBasicTests(unittest.TestCase):
     def test_match_raise_lambda_error(self):
         with self.assertRaises(MatchError) as err:
             match([1, 2, 3], [1, _, 3], lambda: "xxxxx {}".format())
-        self.assertIn('lambda', str(err.exception))
-        self.assertIn('xxxxx', str(err.exception))
+        self.assertIn('lambda', six.text_type(err.exception))
+        self.assertIn('xxxxx', six.text_type(err.exception))
         # print(err.exception)
 
     def test_match_class_hierarchy(self):
-        class Pet: pass
+        class Pet(object): pass
         class Dog(Pet): pass
         class Cat(Pet): pass
         class Hamster(Pet): pass

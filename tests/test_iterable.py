@@ -1,3 +1,4 @@
+import six
 import unittest
 from collections import Iterable
 
@@ -13,7 +14,7 @@ class IterableTests(unittest.TestCase):
 
     def test_match_iterable(self):
         self.assertEqual(self.mi([1, 2, 3], [1, 2, 3]), (True, []))
-        self.assertEqual(self.mi([str, str], ["hello", "world"]), (True, ["hello", "world"]))
+        self.assertEqual(self.mi([six.text_type, six.text_type], ["hello", "world"]), (True, ["hello", "world"]))
         self.assertEqual(self.mi([1, 2], [1, 3]), (False, []))
 
         self.assertEqual(self.mi([1, 2], [1]), (False, []))
