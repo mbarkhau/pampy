@@ -1,3 +1,4 @@
+import six
 import unittest
 
 import functools as ft
@@ -25,18 +26,19 @@ class PampyElaborateTests(unittest.TestCase):
 
     def test_parser(self):
         def parser(exp):
+            _str = six.text_type
             return match(exp,
                 3,              "the integer 3",
                 float,          "any float number",
                 int,            "any integer",
                 "ciao",         "the string ciao",
                 dict,           "any dictionary",
-                str,            "any string",
+                _str,           "any string",
                 (int, int),     "a tuple made of two ints",
                 [1],            "the list [1]",
                 [1, 2, 3],      "the list [1, 2, 3]",
                 [1, _, 3],      "the list [1, _, 3]",
-                (str, str),     lambda a, b: "%s %s" % (a, b),
+                (_str, _str),   lambda a, b: "%s %s" % (a, b),
                 [1, 2, _],      lambda x: "the list [1, 2, _]",
                 [1, 2, 4],      "the list [1, 2, 4]",   # this can never be matched
 

@@ -1,6 +1,8 @@
 import six
 import unittest
 
+from collections import OrderedDict
+
 from pampy import match_dict, _, match
 
 
@@ -35,18 +37,20 @@ class IterableTests(unittest.TestCase):
 
     def test_multi_underscore_ambiguous(self):
         for i in range(20):
-            self.assertEqual(match_dict({"a": _, _: int},
-                                        {"a": 1, "b": 2, "c": 3}), (True, [1, "b", 2]))
+            result = match_dict(OrderedDict([("a", _), (_, int)]),
+                                OrderedDict([("a", 1), ("b", 2), ("c", 3)]))
+            self.assertEqual(result, (True, [1, "b", 2]))
 
-            self.assertEqual(match_dict({"type": _, _: six.text_type},
-                                        {"type": "pet", "cat-name": "bonney", "info": {"age": 1}}),
+            result = match_dict(OrderedDict([("type", _), (_, six.text_type)]),
+                                OrderedDict([("type", "pet"), ("cat-name", "bonney"), ("info", {"age": 1})]))
+            self.assertEqual(result,
                              (True, ["pet", "cat-name", "bonney"]))
 
     def test_wild_dicts(self):
         data = [
-            {"type": "dog", "dog-name": "fuffy", "info": {"age": 2}},
-            {"type": "pet", "dog-name": "puffy", "info": {"age": 1}},
-            {"type": "cat", "cat-name": "buffy", "cat-info": {"age": 3}},
+            OrderedDict([("type", "dog"), ("dog-name", "fuffy"), ("info", {"age": 2})]),
+            OrderedDict([("type", "pet"), ("dog-name", "puffy"), ("info", {"age": 1})]),
+            OrderedDict([("type", "cat"), ("cat-name", "buffy"), ("cat-info", {"age": 3})]),
         ]
 
         # I want the average age of a pet, but the data is inconsistent :/
@@ -55,5 +59,5 @@ class IterableTests(unittest.TestCase):
         self.assertEqual(average_age, (2+1+3)/3)
 
         # I want al the names, but data is inconsistent!
-        names = [match(row, {"type": _, _: six.text_type}, lambda typ, name_field, name: name) for row in data]
+        names = [match(row, OrderedDict([("type", _), (_, six.text_type)]), lambda typ, name_field, name: name) for row in data]
         self.assertEqual(names, ['fuffy', 'puffy', 'buffy'])
