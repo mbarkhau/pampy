@@ -4,7 +4,7 @@ import re
 
 import six
 
-from pampy import match_value, match, HEAD, TAIL, _, MatchError
+from backports.pampy import match_value, match, HEAD, TAIL, _, MatchError
 
 
 class PampyBasicTests(unittest.TestCase):

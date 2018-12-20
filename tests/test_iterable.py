@@ -2,8 +2,8 @@ import six
 import unittest
 from collections import Iterable
 
-from pampy import HEAD, TAIL, _, MatchError
-import pampy
+from backports.pampy import HEAD, TAIL, _, MatchError
+import backports.pampy as pampy
 
 
 class IterableTests(unittest.TestCase):

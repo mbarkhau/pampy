@@ -16,7 +16,7 @@ if any(arg.startswith("bdist") for arg in sys.argv):
 
 
 setuptools.setup(
-    name="pampy",
+    name="backports.pampy",
     version="0.1.10",
     author="Claudio Santini",
     author_email="hireclaudio@gmail.com",
@@ -24,7 +24,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/santinic/pampy",
-    packages=["pampy"],
+    packages=["backports.pampy"],
     package_dir=package_dir,
     platforms='any',
     install_requires=["six", "typing"],

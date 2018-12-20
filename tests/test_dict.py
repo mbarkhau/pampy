@@ -3,7 +3,7 @@ import unittest
 
 from collections import OrderedDict
 
-from pampy import match_dict, _, match
+from backports.pampy import match_dict, _, match
 
 
 class IterableTests(unittest.TestCase):

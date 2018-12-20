@@ -3,7 +3,7 @@ import unittest
 
 import functools as ft
 
-from pampy import match, REST, TAIL, HEAD, _, match_value, match_iterable
+from backports.pampy import match, REST, TAIL, HEAD, _, match_value, match_iterable
 
 
 class PampyElaborateTests(unittest.TestCase):
